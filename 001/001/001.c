@@ -22,9 +22,6 @@
 #include "includes/twi.h"
 #include "includes/dataflash.h"
 
-#define LTHRES 500
-#define RTHRES 500
-
 //????AD9850???
 #define DATA PIND2
 #define WCLK PIND3
@@ -254,7 +251,6 @@ void adc_display()
 	LCD_Clear();
 	Backlight_LED(BL_BLUE_ON);
 	// initialize adc and lcd
-	adc_init();
 	
 	LCD_GotoXY(0,0);
 	// display the labels on LCD
