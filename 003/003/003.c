@@ -321,7 +321,7 @@ void adc_init()
 	
 	// ADC Enable and prescaler of 128
 	// 16000000/128 = 125000
-	ADCSRA = ((1<<ADEN)|(1<<ADPS2)|(1<<ADPS1));
+	ADCSRA = ((1<<ADEN)|(0<<ADPS2)|(1<<ADPS1));
 }
 
 //?ADC??
