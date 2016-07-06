@@ -30,7 +30,8 @@
 #define ClOCK 125000000UL
 int test = 0;
 signed int freq = 0;
-uint32_t AD_freq ;   //
+uint32_t AD_freq = 0;  
+uint32_t AD_freq_old = 0;
 
 #define wait_joy_button()       {LCD_GotoXY(20,7);  \
 	LCD_PutChar(0x10); \
@@ -162,15 +163,13 @@ void get_frequence()
 		//uart0_tx_frame();
         if(data_ok == 1)
         {
-			static uint8_t cnt = 0;
-			//AD_freq = data_frame_in[2];
-			LCD_Clear();
-			LCD_GotoXY(0,2);
-			LCD_PutString(data_frame_in[2]);
-			LCD_GotoXY(0,4);
-			LCD_PutString("test");
-			LCD_Update();
-			cnt++;
+			for(i=3;i>=0;i--)
+    		{
+        		AD_freq_old = AD_freq;
+        		AD_freq = data_frame_in[i];
+        		AD_freq <<= 8*i;
+        		AD_freq += AD_freq_old;
+    		}
 			uart0_tx_frame();
             data_ok = 0;
         }
@@ -182,7 +181,7 @@ void AD9850_Setfrequency(double freq)
 	int i;
 	double x;
 	x =  pow(2,32)/125;
-	freq = freq/1000;
+	freq = freq/1000000;
 	uint32_t tuning_word = freq * x;
 	PORTC &= ~(1<<FQUP);
 	
