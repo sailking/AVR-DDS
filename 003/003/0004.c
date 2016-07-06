@@ -28,9 +28,9 @@
 #define FQUP PIND4
 #define RESET PIND6
 #define ClOCK 125000000UL
-
+int test = 0;
 signed int freq = 0;
-uint32_t AD_freq = 10000;   //
+uint32_t AD_freq ;   //
 
 #define wait_joy_button()       {LCD_GotoXY(20,7);  \
 	LCD_PutChar(0x10); \
@@ -42,7 +42,9 @@ void start ();
 
 void AD9850_setup();
 void AD9850_reset();
+void get_frequence();
 void AD9850_Setfrequency(double freq);
+
 
 void frequence_display();
 
@@ -58,12 +60,17 @@ int main(void)
 	// set PB0-PB3 on high-level
 	PORTB |= 0x0F;		// Required for DMM Board DMM Board 2013
 	
+	void(*get_frequence_p)(void) = get_frequence;			//define a function pointer, point to function get_frequence
+
 	LCD_Init();
-    UART_Init();
+    uart_init0();
 	start ();
 	
 	AD9850_setup();
 	AD9850_reset();
+
+	get_frequence();
+	
 	for(;;)
 	{
 		if(~PINA&(1<<PINA7))
@@ -81,6 +88,9 @@ int main(void)
 		if (~PINA&(1<<PINA4))
 			AD_freq +=100;
 			_delay_ms(100);
+
+		if (~PINA&(1<<PINA4))
+			(*get_frequence_p)();		//when Joystick Button is pressed, get the frequence from serial port again
 		
 		AD9850_Setfrequency(AD_freq);
 		frequence_display();
@@ -132,6 +142,40 @@ void AD9850_reset()
 	PORTD &= ~(1<<FQUP);
 	_delay_us(5);
 	// chip ist reset now
+}
+
+void get_frequence()
+{	
+   // uart_init1();
+    //uart_init0();
+	LCD_Clear();
+	LCD_GotoXY(0,0);
+	LCD_PutString_P(PSTR("waiting for inputting "));
+	LCD_GotoXY(0,2);
+	LCD_PutString_P(PSTR("the frequence "));
+	LCD_GotoXY(20,7);
+    LCD_PutChar(0x10);
+	LCD_Update();
+	
+    sei();
+    while(1)
+    {
+		//uart0_tx_frame();
+        if(data_ok == 1)
+        {
+			static uint8_t cnt = 0;
+			//AD_freq = data_frame_in[2];
+			LCD_Clear();
+			LCD_GotoXY(0,2);
+			LCD_PutString(data_frame_in[2]);
+			LCD_GotoXY(0,4);
+			LCD_PutString("test");
+			LCD_Update();
+			cnt++;
+			uart0_tx_frame();
+            data_ok = 0;
+        }
+    }
 }
 
 void AD9850_Setfrequency(double freq)
