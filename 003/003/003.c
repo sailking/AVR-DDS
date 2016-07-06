@@ -23,10 +23,10 @@
 #include "includes/dataflash.h"
 
 //????AD9850???
-#define DATA PIND2
-#define WCLK PIND3
-#define FQUP PIND4
-#define RESET PIND6
+#define DATA PINC5
+#define WCLK PINC4
+#define FQUP PINC3
+#define RESET PINC2
 #define ClOCK 125000000UL
 int test = 0;
 signed int freq = 0;
@@ -103,43 +103,42 @@ void start ()
 	LCD_PutString_P(PSTR("Project 04:\r\n"));
 	LCD_PutString_P(PSTR("DDS-Signalgenerator\r\n"));
 	LCD_PutString_P(PSTR("Members:\r\n"));
-	LCD_PutString_P(PSTR("Li Xuejing\r\n"));
-	LCD_PutString_P(PSTR("Zhang Yue\r\n"));
 	LCD_PutString_P(PSTR("Wang Shihang\r\n"));
+	LCD_PutString_P(PSTR("Li Xuejing\r\n"));	
 	LCD_Update();
 	wait_joy_button();
 }
 
 void AD9850_setup()
 {
-	DDRD |= ((1<<DATA)|(1<<WCLK)|(1<<FQUP)|(1<<RESET));		//???AD9850?????????
-	PORTD &= ~((1<<DATA)|(1<<WCLK)|(1<<FQUP)|(1<<RESET));	//????????????
+	DDRC |= ((1<<DATA)|(1<<WCLK)|(1<<FQUP)|(1<<RESET));		//???AD9850?????????
+	PORTC &= ~((1<<DATA)|(1<<WCLK)|(1<<FQUP)|(1<<RESET));	//????????????
 }
 
 void AD9850_reset()
 {
-	PORTD &= ~((1<<WCLK)|(1<<FQUP));
-	PORTD &= ~(1<<RESET);									//pulse RESET
+	PORTC &= ~((1<<WCLK)|(1<<FQUP));
+	PORTC &= ~(1<<RESET);									//pulse RESET
 	_delay_us(5);
-	PORTD |= (1<<RESET);
+	PORTC |= (1<<RESET);
 	_delay_us(5);
-	PORTD &= ~(1<<RESET);
-	_delay_us(5);
-	
-	PORTD &= ~(1<<WCLK);									//pulse WCLK
-	_delay_us(5);
-	PORTD |= (1<<WCLK);
-	_delay_us(5);
-	PORTD &= ~(1<<WCLK);
+	PORTC &= ~(1<<RESET);
 	_delay_us(5);
 	
-	PORTD &= ~(1<<DATA);									//make sure DATA pin is LOW
+	PORTC &= ~(1<<WCLK);									//pulse WCLK
+	_delay_us(5);
+	PORTC |= (1<<WCLK);
+	_delay_us(5);
+	PORTC &= ~(1<<WCLK);
+	_delay_us(5);
 	
-	PORTD &= ~(1<<FQUP);									//pulse FQUP
+	PORTC &= ~(1<<DATA);									//make sure DATA pin is LOW
+	
+	PORTC &= ~(1<<FQUP);									//pulse FQUP
 	_delay_us(5);
-	PORTD |= (1<<FQUP);
+	PORTC |= (1<<FQUP);
 	_delay_us(5);
-	PORTD &= ~(1<<FQUP);
+	PORTC &= ~(1<<FQUP);
 	_delay_us(5);
 	// chip ist reset now
 }
@@ -185,7 +184,7 @@ void AD9850_Setfrequency(double freq)
 	x =  pow(2,32)/125;
 	freq = freq/1000;
 	uint32_t tuning_word = freq * x;
-	PORTD &= ~(1<<FQUP);
+	PORTC &= ~(1<<FQUP);
 	
 	//write W0
 	uint8_t W0 = tuning_word;
@@ -193,14 +192,14 @@ void AD9850_Setfrequency(double freq)
 	{
 		if(W0&0x01)
 		{
-			PORTD |= (1<<DATA);
+			PORTC |= (1<<DATA);
 		}
 		else
 		{
-			PORTD &= ~(1<<DATA);
+			PORTC &= ~(1<<DATA);
 		}
-		PORTD |= (1<<WCLK);
-		PORTD &= ~(1<<WCLK);
+		PORTC |= (1<<WCLK);
+		PORTC &= ~(1<<WCLK);
 		W0 = W0>>1;
 	}
 	
@@ -210,14 +209,14 @@ void AD9850_Setfrequency(double freq)
 	{
 		if(W1&0x01)
 		{
-			PORTD |= (1<<DATA);
+			PORTC |= (1<<DATA);
 		}
 		else
 		{
-			PORTD &= ~(1<<DATA);
+			PORTC &= ~(1<<DATA);
 		}
-		PORTD |= (1<<WCLK);
-		PORTD &= ~(1<<WCLK);
+		PORTC |= (1<<WCLK);
+		PORTC &= ~(1<<WCLK);
 		W1 = W1>>1;
 	}
 	
@@ -227,14 +226,14 @@ void AD9850_Setfrequency(double freq)
 	{
 		if(W2&0x01)
 		{
-			PORTD |= (1<<DATA);
+			PORTC |= (1<<DATA);
 		}
 		else
 		{
-			PORTD &= ~(1<<DATA);
+			PORTC &= ~(1<<DATA);
 		}
-		PORTD |= (1<<WCLK);
-		PORTD &= ~(1<<WCLK);
+		PORTC |= (1<<WCLK);
+		PORTC &= ~(1<<WCLK);
 		W2 = W2>>2;
 	}
 	
@@ -244,14 +243,14 @@ void AD9850_Setfrequency(double freq)
 	{
 		if(W3&0x01)
 		{
-			PORTD |= (1<<DATA);
+			PORTC |= (1<<DATA);
 		}
 		else
 		{
-			PORTD &= ~(1<<DATA);
+			PORTC &= ~(1<<DATA);
 		}
-		PORTD |= (1<<WCLK);
-		PORTD &= ~(1<<WCLK);
+		PORTC |= (1<<WCLK);
+		PORTC &= ~(1<<WCLK);
 		W3 = W3>>1;
 	}
 	
@@ -259,15 +258,15 @@ void AD9850_Setfrequency(double freq)
 	uint8_t W4 = 0x00;
 	for(i=0; i<8; i++ )
 	{
-		PORTD &= ~(1<<DATA);
-		PORTD |= (1<<WCLK);
-		PORTD &= ~(1<<WCLK);
+		PORTC &= ~(1<<DATA);
+		PORTC |= (1<<WCLK);
+		PORTC &= ~(1<<WCLK);
 		W4 = W4>>1;
 	}
 	
-	PORTD |= (1<<FQUP);
+	PORTC |= (1<<FQUP);
 	_delay_us(5);
-	PORTD &= ~(1<<FQUP);
+	PORTC &= ~(1<<FQUP);
 }
 
 void frequence_display()
