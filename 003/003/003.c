@@ -150,9 +150,9 @@ void get_frequence()
     //uart_init0();
 	LCD_Clear();
 	LCD_GotoXY(0,0);
-	LCD_PutString_P(PSTR("please input the "));
+	LCD_PutString_P(PSTR("waiting for inputting "));
 	LCD_GotoXY(0,2);
-	LCD_PutString_P(PSTR("frequence in KHz "));
+	LCD_PutString_P(PSTR("the frequence "));
 	LCD_GotoXY(20,7);
     LCD_PutChar(0x10);
 	LCD_Update();
