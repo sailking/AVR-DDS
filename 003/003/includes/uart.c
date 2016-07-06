@@ -1,17 +1,18 @@
 #include "uart.h"
 
 volatile uint8_t data_frame_out[DATA_FRAME_LENGTH] = {"Die Daten werden als serieller digitaler Datenstrom mit einem fixen Rahmen übertragen, der aus einem Start-Bit, fünf bis maximal neun Datenbits."}; //Dummydaten
-volatile uint8_t data_frame_in[DATA_FRAME_LENGTH] = {0,1,2,3};
+volatile uint8_t data_frame_in[DATA_FRAME_LENGTH];
 const uint8_t device_address = 3;
 volatile uint8_t data_ok = 0;
 
-ISR(USART0__RX_vect)
+ISR(USART0_RX_vect)
 {
 	char udr_buffer = UDR0;
 	static uint8_t uart_rx_cnt = 0;
 	static uint8_t address = 0;
 	static uint8_t checksum = 0;
 	static uint8_t checksum_in = 0;
+
 	if(udr_buffer != 13) //CR
 	{
 		if(uart_rx_cnt == 1)
@@ -43,7 +44,7 @@ ISR(USART0__RX_vect)
 }
 
 
-ISR(USART0__TX_vect)
+ISR(USART0_TX_vect)
 {
 	static uint8_t checksum = 0;
 	static uint8_t byte_cnt = 0;
@@ -136,6 +137,7 @@ ISR(USART1_TX_vect)
 		data_ok = 0;
 	}
 }
+
 uint8_t uart0_tx_frame()
 {
 	uart_tx_byte(PREAMBLE);

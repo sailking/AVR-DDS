@@ -46,7 +46,8 @@ void AD9850_reset();
 void get_frequence();
 void AD9850_Setfrequency(double freq);
 
-
+void adc_init();
+uint16_t adc_read(uint8_t ch);
 void frequence_display();
 
 
@@ -61,7 +62,7 @@ int main(void)
 	// set PB0-PB3 on high-level
 	PORTB |= 0x0F;		// Required for DMM Board DMM Board 2013
 	
-	void(*get_frequence_p)(void) = get_frequence;			//define a function pointer, point to function get_frequence
+	//void(*get_frequence_p)(void) = get_frequence;			//define a function pointer, point to function get_frequence
 
 	LCD_Init();
     uart_init0();
@@ -71,7 +72,8 @@ int main(void)
 	AD9850_reset();
 
 	get_frequence();
-	
+	//adc_init();
+
 	for(;;)
 	{
 		if(~PINA&(1<<PINA7))
@@ -90,8 +92,8 @@ int main(void)
 			AD_freq +=100;
 			_delay_ms(100);
 
-		if (~PINA&(1<<PINA4))
-			(*get_frequence_p)();		//when Joystick Button is pressed, get the frequence from serial port again
+		//if (~PINA&(1<<PINA4))
+			//(*get_frequence_p)();		//when Joystick Button is pressed, get the frequence from serial port again
 		
 		AD9850_Setfrequency(AD_freq);
 		frequence_display();
@@ -150,9 +152,9 @@ void get_frequence()
     //uart_init0();
 	LCD_Clear();
 	LCD_GotoXY(0,0);
-	LCD_PutString_P(PSTR("waiting for inputting "));
-	LCD_GotoXY(0,2);
-	LCD_PutString_P(PSTR("the frequence "));
+	LCD_PutString_P(PSTR("waiting for \r\n"));
+	LCD_PutString_P(PSTR("inputting the \r\n"));
+	LCD_PutString_P(PSTR("frequence \r\n "));
 	LCD_GotoXY(20,7);
     LCD_PutChar(0x10);
 	LCD_Update();
@@ -163,6 +165,7 @@ void get_frequence()
 		//uart0_tx_frame();
         if(data_ok == 1)
         {
+			int i;
 			for(i=3;i>=0;i--)
     		{
         		AD_freq_old = AD_freq;
@@ -281,11 +284,66 @@ void frequence_display()
 	itoa(AD_freq, getfrequency_buffer, 10);
 	LCD_PutString(getfrequency_buffer);
 	LCD_PutString_P(PSTR("      KHz"));
-	LCD_PutChar(0x10);
-	LCD_Update();
-	_delay_ms(10);
+	while(1);
+
+	uint16_t adc_result1, adc_result2;
+	char adc_buffer[10];
+	LCD_GotoXY(0,4);
+	// display the labels on LCD
+	LCD_PutString_P(PSTR("left  ADC =   \r\n\n"));
+	LCD_PutString_P(PSTR("right ADC =   \r\n\n"));
+
+	
+	while(1)
+	{
+		adc_result1 = adc_read(1);      // read adc value at PA0
+		adc_result2 = adc_read(2);      // read adc value at PA1
+		
+		// now display on lcd
+		itoa(adc_result1, adc_buffer, 10);
+		LCD_GotoXY(12,4);
+		LCD_PutString(adc_buffer);
+		
+		itoa(adc_result2, adc_buffer, 10);
+		LCD_GotoXY(12,6);
+		LCD_PutString(adc_buffer);
+		//UART_PutString(adc_buffer);
+		
+		LCD_Update();
+		_delay_ms(100);
+	}
 }
 
+void adc_init()
+{
+	// AREF = AVcc
+	ADMUX = (1<<REFS0);
+	
+	// ADC Enable and prescaler of 128
+	// 16000000/128 = 125000
+	ADCSRA = ((1<<ADEN)|(1<<ADPS2)|(1<<ADPS1));
+}
+
+//?ADC??
+uint16_t adc_read(uint8_t ch)
+{
+	// select the corresponding channel 0~7
+	// ANDing with '7' will always keep the value
+	// of 'ch' between 0 and 7
+	ch &= 0b00000111;  // AND operation with 7
+	ADMUX = (ADMUX & 0xF8)|ch;     // clears the bottom 3 bits before ORing
+	
+	// start single conversion
+	// write '1' to ADSC
+	ADCSRA |= (1<<ADSC);
+	
+	// wait for conversion to complete
+	// ADSC becomes '0' again
+	// till then, run loop continuously
+	while(ADCSRA & (1<<ADSC));
+	
+	return (ADC);
+}
 
 
 
