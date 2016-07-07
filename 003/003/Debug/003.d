@@ -19,7 +19,8 @@
  d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
  .././includes/uart.h \
  d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\atomic.h \
- .././includes/lcd.h .././includes/twi.h .././includes/dataflash.h
+ .././includes/lcd.h .././includes/twi.h .././includes/dataflash.h \
+ .././includes/oszilloskope.h
 
 d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -66,3 +67,5 @@ d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././includes/twi.h:
 
 .././includes/dataflash.h:
+
+.././includes/oszilloskope.h:
