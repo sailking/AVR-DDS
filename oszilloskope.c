@@ -1,29 +1,9 @@
-#define msUp				1
-#define msDwn				4      
-#define YposUp				0
-#define YposDwn				3
-#define freeze				2
+#include <oszilloskope.h>
 
-#define AC 					0
-#define DC 					1
-#define SQUARE				2
-#define TRUE				0
-#define FALSE				1
-
-unsigned int  dataCounter = 0;
-unsigned int  timeDiv = 0;  
-unsigned char trigger = 0;
-unsigned char findZero = 0;
-unsigned char upLimit = 0;
-unsigned char lowLimit = 255;
-unsigned char prevADCvalue = 0;
-unsigned char voltageType = AC;
-unsigned char complete = TRUE;
-unsigned int  voltage;
-unsigned char frequency;
-unsigned int  ADCvalue;
-unsigned char hex2asciiBuffer[4];
-
+void fillDataLcdBuffer (unsigned char address, unsigned char data)
+{
+	dataLcdBuffer[address] = data;
+}
 
 int main (void)
 {
@@ -40,21 +20,21 @@ int main (void)
 	for(;;)
 	{
 
-		if (~PINC & (1<<msUp) && (timeDiv <= 120))
+		if (~PINA&(1<<PINA7)) && (timeDiv <= 120))
 	    	timeDiv += 1;
 
-		if (~PINC & (1<<msDwn) && (timeDiv >= 1))
+		if (~PINA&(1<<PINA6)) && (timeDiv >= 1))
 			timeDiv -= 1;
 
 
-		if (~PINC & (1<<YposUp) && (Ypos2 <= 60))
+		if (~PINA&(1<<PINA5)) && (Ypos2 <= 60))
 	    	Ypos2++;
 
-		if (~PINC & (1<<YposDwn) && (Ypos2 >= -60))
+		if (~PINA&(1<<PINA4)) && (Ypos2 >= -60))
 			Ypos2--;
 
-		if (~PINC & (1<<freeze))
-			while (~PINC & (1<<freeze)); // It freezes the display to watch the wave.
+		if (~PINA&(1<<PINA4)& (1<<freeze))
+			while (~PINA&(1<<PINA4) & (1<<freeze)); // It freezes the display to watch the wave.
 		
 
 			
@@ -235,7 +215,7 @@ int main (void)
 }
 
 
-if(~PINA&(1<<PINA7))
+		if(~PINA&(1<<PINA7))
 			AD_freq +=1000;
 			_delay_ms(100);
 		
