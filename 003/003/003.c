@@ -33,7 +33,8 @@
 
 uint32_t freq = 0;
 uint32_t AD_freq = 0;  
-uint32_t AD_freq_old = 0;
+uint16_t data1 = 0;
+uint16_t data2 = 0;
 
 #define wait_joy_button()       {LCD_GotoXY(20,7);  \
 	LCD_PutChar(0x10); \
@@ -67,13 +68,40 @@ int main(void)
 	//void(*get_frequence_p)(void) = get_frequence;			//define a function pointer, point to function get_frequence
 
 	LCD_Init();
-    uart_init0();
+    uart_init1();
 	start ();
 	
 	AD9850_setup();
 	AD9850_reset();
 
-	get_frequence();
+	//get_frequence();
+	AD_freq=10000000;
+
+	for(;;)
+	{
+		if(~PINA&(1<<PINA7))
+			AD_freq +=1000000;
+			_delay_ms(100);
+
+		if (~PINA&(1<<PINA6))
+			AD_freq -=1000000;
+			_delay_ms(100);
+
+		if (~PINA&(1<<PINA5))
+			AD_freq -=100000;
+			_delay_ms(20);
+
+		if (~PINA&(1<<PINA4))
+			AD_freq +=100000;
+			_delay_ms(100);
+
+		//if (~PINA&(1<<PINA3))
+			//(*get_frequence_p)();		//when Joystick Button is pressed, get the frequence from serial port again
+		
+		AD9850_Setfrequency(AD_freq);
+		adc_init();
+		signal_display();
+	}
 }
 
 void start ()
@@ -141,18 +169,19 @@ void get_frequence()
 		//uart0_tx_frame();
         if(data_ok == 1)
         {
-			int i;
-			for(i=3;i>=0;i--)
-    		{
-        		AD_freq_old = AD_freq;
-        		AD_freq = data_frame_in[i];
-        		AD_freq <<= 8*i;
-        		AD_freq += AD_freq_old;
-    		}
-			AD9850_Setfrequency(AD_freq);
-			signal_display();
-			uart0_tx_frame();
+			
+			data1 = (uint16_t)(data_frame_in[0] << 8);
+			data1 += (uint16_t)(data_frame_in[1]);
+			data2 = (uint16_t)(data_frame_in[2] << 8);
+			data2 += (uint16_t) data_frame_in[3]; // 32bit Variable mit daten drin
+
+			AD_freq = data1;
+			AD_freq <<= 16;
+			AD_freq += data2;
+
+			uart1_tx_frame();
             data_ok = 0;
+			break;
         }
     }
 }
@@ -291,7 +320,7 @@ void signal_display()
 	//uint32_t endOfPeriod=0;
 	uint8_t freqComplete=0;
 
-	create_raster();
+	//create_raster();
 	create_wave();
 
 	for(;;)
@@ -410,6 +439,7 @@ void signal_display()
 		}while(complete == FALSE);
 	}
 }
+
 
 
 
