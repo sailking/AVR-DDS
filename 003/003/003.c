@@ -16,11 +16,13 @@
 #include <util/delay.h>
 #include <avr/pgmspace.h>
 #include <math.h>
+#include <avr/sfr_defs.h>
 
 #include "includes/uart.h"
 #include "includes/lcd.h"
 #include "includes/twi.h"
 #include "includes/dataflash.h"
+#include "includes/oszilloskope.h"
 
 //????AD9850???
 #define DATA PINC5
@@ -28,8 +30,8 @@
 #define FQUP PINC3
 #define RESET PINC2
 #define ClOCK 125000000UL
-int test = 0;
-signed int freq = 0;
+
+uint32_t freq = 0;
 uint32_t AD_freq = 0;  
 uint32_t AD_freq_old = 0;
 
@@ -46,9 +48,9 @@ void AD9850_reset();
 void get_frequence();
 void AD9850_Setfrequency(double freq);
 
+void fillDataLcdBuffer (uint8_t address, uint8_t data);
 void adc_init();
-uint16_t adc_read(uint8_t ch);
-void frequence_display();
+void signal_display();
 
 
 int main(void)
@@ -72,32 +74,6 @@ int main(void)
 	AD9850_reset();
 
 	get_frequence();
-	//adc_init();
-
-	for(;;)
-	{
-		if(~PINA&(1<<PINA7))
-			AD_freq +=1000;
-			_delay_ms(100);
-		
-		if (~PINA&(1<<PINA6))
-			AD_freq -=1000;
-			_delay_ms(100);
-		
-		if (~PINA&(1<<PINA5))
-			AD_freq -=100;
-			_delay_ms(20);
-			
-		if (~PINA&(1<<PINA4))
-			AD_freq +=100;
-			_delay_ms(100);
-
-		//if (~PINA&(1<<PINA4))
-			//(*get_frequence_p)();		//when Joystick Button is pressed, get the frequence from serial port again
-		
-		AD9850_Setfrequency(AD_freq);
-		frequence_display();
-	}
 }
 
 void start ()
@@ -173,6 +149,8 @@ void get_frequence()
         		AD_freq <<= 8*i;
         		AD_freq += AD_freq_old;
     		}
+			AD9850_Setfrequency(AD_freq);
+			signal_display();
 			uart0_tx_frame();
             data_ok = 0;
         }
@@ -271,6 +249,171 @@ void AD9850_Setfrequency(double freq)
 	PORTC &= ~(1<<FQUP);
 }
 
+void adc_init ()
+{
+	ADMUX = 0b01100001;    // PA1 -> ADC1, ADLAR=1 (8-bit)
+	ADCSRA |= ((1<<ADEN) | (1<<ADSC) | (1<<ADPS1)); // ADC prescaler at 4
+}
+
+void fillDataLcdBuffer (uint8_t address, uint8_t data)
+{
+	dataLcdBuffer[address] = data;
+}
+
+void create_raster()
+{
+	uint16_t raster_offset = 0;				
+	uint8_t fb_x = 0;
+	uint8_t fb_y = 0;
+	Backlight_LED(BL_RED_ON | BL_GREEN_ON | BL_BLUE_ON);	
+	LCD_Clear();
+	for (fb_y = 0; fb_y < 8; fb_y++)
+		for (fb_x = 0; fb_x < 128; fb_x++)
+			lcd_framebuffer[fb_y][fb_x] = pgm_read_byte(&raster[raster_offset++]);
+	lcd_frameupdate = 0xff;
+	LCD_Update();
+	while(1);
+}
+
+void create_wave()
+{
+	uint8_t i;
+	for(i=0;i<100;i++)
+	{
+		LCD_DrawPixel(i,dataLcdBuffer[i],1);
+	}
+}
+
+void signal_display()
+{
+	//-----------------read signal from ADC-----------------------------------
+	uint16_t i,k;
+	//uint32_t endOfPeriod=0;
+	uint8_t freqComplete=0;
+
+	create_raster();
+	create_wave();
+
+	for(;;)
+	{
+		if((~PINA&(1<<PINA7))&& (timeDiv <= 120))
+
+		if((~PINA&(1<<PINA6)) && (timeDiv >= 1))
+
+		if((~PINA&(1<<PINA5)) && (Ypos2 <= 60))
+
+		if((~PINA&(1<<PINA4)) && (Ypos2 >= -60))
+
+		if(~PINA&(1<<PINA3))
+			while(~PINA&(1<<PINA3));
+
+		findZero = 0;
+		upLimit = 0;
+		lowLimit = 255;
+		//endOfPeriod = 0;
+		freqComplete = 0;
+		complete = FALSE;
+
+		for (i=2; i<15000; i++)
+		{
+			ADCSRA |= (1 << ADSC); // Enable ADC
+			loop_until_bit_is_set(ADCSRA, ADIF); // wait until conversion complete.
+			ADCvalue = ADCH;
+
+			if((ADCvalue > trigger) && (prevADCvalue < ADCvalue) && (freqComplete == 0))
+				freqComplete = 1;
+			
+			//If you have found the start of the period, find the rise of the waveform.
+			if((ADCvalue < trigger) && (prevADCvalue < ADCvalue) && (freqComplete == 1))
+				freqComplete = 2;
+
+			if((ADCvalue > trigger) && (prevADCvalue < ADCvalue) && (freqComplete == 2))
+			{
+				freqComplete = 3; //we found the end of the first period.
+			}
+
+			prevADCvalue = ADCvalue; // Get a backup of the current ADC value.
+
+			for(k=timeDiv;k>0;k--) 
+			{
+				ADCSRA |= (1 << ADSC);   // Enable ADC
+				loop_until_bit_is_set(ADCSRA, ADIF); // wait until conversion complete.
+				ADCvalue = ADCH;
+			}
+
+			if (upLimit < ADCvalue)  // Find the higher voltage level of the input waveform.
+				upLimit = ADCvalue;
+
+			if (lowLimit > ADCvalue) // Find the lower voltage level of the input waveform.
+				lowLimit = ADCvalue;
+		
+			if (ADCvalue > 0)
+			{
+				voltage = ((upLimit-lowLimit)*2); //Get the Vpp and store it to "voltage" (Volts Peak-to-peak of inputed waveform).
+				ADCvalue += 5;
+				ADCvalue /= 5;
+				ADCvalue += 2;
+			}
+			else
+				ADCvalue = 2;
+		
+			position = ADCvalue + Ypos2 +5; 
+			if ((position <= 63) && (position >= 0) && (i<100))
+				fillDataLcdBuffer(i,position);
+			else
+			{
+				if(i<100)
+					fillDataLcdBuffer(i,0);
+
+				if((i>100)&&(freqComplete==3))
+					break;
+			}
+		}
+		if(upLimit != lowLimit)
+			trigger = (((upLimit - lowLimit)/2)+ lowLimit);
+		else
+			trigger = upLimit;
+
+//--------------------display the signal----------------------------
+		create_wave();
+//-------------------------------------------------------------------
+
+		dataCounter = 0;
+		complete = FALSE;
+		freqComplete = 0;
+
+		do
+		{
+			prevADCvalue = ADCvalue;
+			
+			ADCSRA |= (1 << ADSC);    // Enable ADC
+			loop_until_bit_is_set(ADCSRA, ADIF);
+			ADCvalue = ADCH;
+
+			//Find the start of the period of the measured waveform. 
+			if((ADCvalue > trigger) && (prevADCvalue < ADCvalue) && (freqComplete == 0))
+				freqComplete = 1;
+	
+			//If you have found the start of the period, find the rise of the waveform.
+			if((ADCvalue < trigger) && (prevADCvalue < ADCvalue) && (freqComplete == 1))
+				freqComplete = 2;
+
+			//The next step is to find the start of the next period...
+			if((ADCvalue > trigger) && (prevADCvalue < ADCvalue) && (freqComplete == 2))
+			{
+				freqComplete = 3; 
+				complete = TRUE;
+			}
+			if(dataCounter > 3000)
+				complete = TRUE;
+			dataCounter++;
+		}while(complete == FALSE);
+	}
+}
+
+
+
+/*
 void frequence_display()
 {
 	char getfrequency_buffer[32];
@@ -284,34 +427,6 @@ void frequence_display()
 	itoa(AD_freq, getfrequency_buffer, 10);
 	LCD_PutString(getfrequency_buffer);
 	LCD_PutString_P(PSTR("      KHz"));
-	while(1);
-
-	uint16_t adc_result1, adc_result2;
-	char adc_buffer[10];
-	LCD_GotoXY(0,4);
-	// display the labels on LCD
-	LCD_PutString_P(PSTR("left  ADC =   \r\n\n"));
-	LCD_PutString_P(PSTR("right ADC =   \r\n\n"));
-
-	
-	while(1)
-	{
-		adc_result1 = adc_read(1);      // read adc value at PA0
-		adc_result2 = adc_read(2);      // read adc value at PA1
-		
-		// now display on lcd
-		itoa(adc_result1, adc_buffer, 10);
-		LCD_GotoXY(12,4);
-		LCD_PutString(adc_buffer);
-		
-		itoa(adc_result2, adc_buffer, 10);
-		LCD_GotoXY(12,6);
-		LCD_PutString(adc_buffer);
-		//UART_PutString(adc_buffer);
-		
-		LCD_Update();
-		_delay_ms(100);
-	}
 }
 
 void adc_init()
@@ -324,7 +439,8 @@ void adc_init()
 	ADCSRA = ((1<<ADEN)|(0<<ADPS2)|(1<<ADPS1));
 }
 
-//?ADC??
+
+
 uint16_t adc_read(uint8_t ch)
 {
 	// select the corresponding channel 0~7
@@ -344,6 +460,7 @@ uint16_t adc_read(uint8_t ch)
 	
 	return (ADC);
 }
+*/
 
 
 
