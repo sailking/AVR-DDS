@@ -1,45 +1,21 @@
 #include <oszilloskope.h>
 
-void fillDataLcdBuffer (uint8_t address, uint8_t data)
+void fillDataLcdBuffer (unsigned char address, unsigned char data)
 {
 	dataLcdBuffer[address] = data;
 }
 
-void create_raster()
-{
-	uint16_t emg_offset = 0;				
-	uint8_t fb_x = 0;
-	uint8_t fb_y = 0;
-	Backlight_LED(BL_RED_ON | BL_GREEN_ON | BL_BLUE_ON);	
-	LCD_Clear();
-	for (fb_y = 0; fb_y < 8; fb_y++)
-	for (fb_x = 0; fb_x < 128; fb_x++)
-	lcd_framebuffer[fb_y][fb_x] = pgm_read_byte(&_action_1[emg_offset++]);
-	lcd_frameupdate = 0xff;
-	LCD_Update();	
-}
-
-void create_wave()
-{
-	uint8_t i;
-	for(i=0;i<100;i++)
-	{
-		LCD_DrawPixel(i,dataLcdBuffer[i],1);
-	}
-}
-
-int signal_display (void)
+int main (void)
 {
 
-	uint16_t  i,k;
-	uint32_t endOfPeriod=0;
-	uint8_t freqComplete=0;
-	uint16_t  maxVoltage=0;
+	unsigned int  i,k;
+	unsigned long endOfPeriod=0;
+	unsigned char freqComplete=0;
+	unsigned int  maxVoltage=0;
 
     adc_init();
 	_delay_ms(4000);
-	create_raster();
-	create_wave();
+	createWave();
 
 	for(;;)
 	{
@@ -148,7 +124,58 @@ int signal_display (void)
 
 //--------- Print Volts peak-to-peak and frequency on display -------------
 
-		create_wave();
+		restoreRaster();
+		createWave();
+
+		line=3;                    //Show the DC voltage
+		column=109;
+		gLCDgotoXY(line,column);
+		hex2Ascii(maxVoltage,hex2asciiBuffer);
+		GLCD_WriteChar(hex2asciiBuffer[2]);
+		sendDataOnLCD(0b01000000); //Print one dot character on LCD (only 1 column length).
+		sendDataOnLCD(0);
+		GLCD_WriteChar(hex2asciiBuffer[1]);
+		GLCD_WriteChar(hex2asciiBuffer[0]);
+		sendDataOnLCD(0x00);
+		GLCD_WriteChar('V');
+
+		line=4;                    //Show the Vpp (Volts peak-to-peak).
+		column=109;
+		gLCDgotoXY(line,column);
+		hex2Ascii(voltage,hex2asciiBuffer);
+		GLCD_WriteChar(hex2asciiBuffer[2]);
+		sendDataOnLCD(0b01000000); //Print one dot character on LCD (only 1 column length).
+		sendDataOnLCD(0);
+		GLCD_WriteChar(hex2asciiBuffer[1]);
+		GLCD_WriteChar(hex2asciiBuffer[0]);
+		sendDataOnLCD(0x00);
+		GLCD_WriteChar('V');
+
+		line=6;                   // Go to 6th line on LCD.
+		column=122; 
+		gLCDgotoXY(line,column);
+
+		if(timeDiv == 0)          // If 'timeDiv' = 0 then the frequency in to the 'endOfPeriod' variable is real.
+			GLCD_WriteChar(0x5c); // So, print on LCD the "Play" character. '0x5c' is the '\' character ("Play" symbol).
+		else
+			GLCD_WriteChar(']');  // If 'timeDiv' is not zero that means we have shrink the waveform. So, print the "Pause" symbol on LCD. 
+		
+		if(timeDiv == 0)		  // If 'timeDiv' = 0 then the frequency in to the 'endOfPeriod' variable is real.
+		{
+			line=7;               // Go to 7th line and print on LCD the waveform's frequency
+			column=102;
+			gLCDgotoXY(line,column);
+			if(endOfPeriod <10000) // The maximum frequency that can be displayed on LCD is 9999 Hz.
+			{
+				gLCDgotoXY(line,column);
+				hex2Ascii(endOfPeriod,hex2asciiBuffer);
+				GLCD_WriteChar(hex2asciiBuffer[3]);
+				GLCD_WriteChar(hex2asciiBuffer[2]);
+				GLCD_WriteChar(hex2asciiBuffer[1]);
+				GLCD_WriteChar(hex2asciiBuffer[0]);	
+			}
+			
+		}                    // if 'timeDiv' > 0 do not update the frequency. Keep the previous frequency value instead. 
 
 //-------------------------------------------------------
 
@@ -184,5 +211,22 @@ int signal_display (void)
 
 		}while(complete == FALSE);
 
-	}
-}	
+	}	
+}
+
+
+		if(~PINA&(1<<PINA7))
+			AD_freq +=1000;
+			_delay_ms(100);
+		
+		if (~PINA&(1<<PINA6))
+			AD_freq -=1000;
+			_delay_ms(100);
+		
+		if (~PINA&(1<<PINA5))
+			AD_freq -=100;
+			_delay_ms(20);
+			
+		if (~PINA&(1<<PINA4))
+			AD_freq +=100;
+			_delay_ms(100);
