@@ -50,31 +50,20 @@ Discarded input sections
  .text          0x00000000        0x0 003.o
  .data          0x00000000        0x0 003.o
  .bss           0x00000000        0x0 003.o
- .text.AD9850_setup
-                0x00000000        0xe 003.o
- .text.AD9850_reset
-                0x00000000       0x64 003.o
- .text.AD9850_Setfrequency
-                0x00000000       0xa4 003.o
- .text.adc_init
-                0x00000000       0x12 003.o
+ .text.get_frequence
+                0x00000000       0x9c 003.o
  .text.fillDataLcdBuffer
                 0x00000000        0xc 003.o
- .text.get_frequence
-                0x00000000       0xc6 003.o
  .text.create_wave
-                0x00000000       0x3e 003.o
- .text.signal_display
-                0x00000000        0x4 003.o
- .progmem.data.__c.2143
+                0x00000000       0x42 003.o
+ .progmem.data.__c.2142
                 0x00000000        0xe 003.o
- .progmem.data.__c.2141
+ .progmem.data.__c.2140
                 0x00000000       0x11 003.o
- .progmem.data.__c.2139
+ .progmem.data.__c.2138
                 0x00000000        0xf 003.o
- .bss.AD_freq_old
-                0x00000000        0x4 003.o
- .bss.AD_freq   0x00000000        0x4 003.o
+ .bss.data2     0x00000000        0x2 003.o
+ .bss.data1     0x00000000        0x2 003.o
  .bss.freq      0x00000000        0x4 003.o
  .bss.dataLcdBuffer
                 0x00000000       0x64 003.o
@@ -214,68 +203,42 @@ Discarded input sections
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3.o)
- .text.avr-libc.fplib
-                0x00000000        0x8 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3x.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3x.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3x.o)
- .text.avr-libc.fplib
-                0x00000000       0xdc d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3x.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
- .text.avr-libc.fplib
-                0x00000000       0x5e d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(floatsisf.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(floatsisf.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(floatsisf.o)
- .text.avr-libc.fplib
-                0x00000000       0x7a d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(floatsisf.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_inf.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_inf.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_inf.o)
- .text.avr-libc.fplib
-                0x00000000        0xc d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_inf.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_nan.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_nan.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_nan.o)
- .text.avr-libc.fplib
-                0x00000000        0x6 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_nan.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
- .text.avr-libc.fplib
-                0x00000000        0xe d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
- .text.avr-libc.fplib
-                0x00000000        0xe d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_round.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_round.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_round.o)
- .text.avr-libc.fplib
-                0x00000000       0x22 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_round.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_split3.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_split3.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_split3.o)
- .text.avr-libc.fplib
-                0x00000000       0x44 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_split3.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_zero.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_zero.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_zero.o)
- .text.avr-libc.fplib
-                0x00000000        0xe d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_zero.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3.o)
- .text.avr-libc.fplib
-                0x00000000        0x8 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
- .text.avr-libc.fplib
-                0x00000000       0xd2 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
  .text          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
  .data          0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
@@ -455,7 +418,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1232
+.text           0x00000000     0x17b6
  *(.vectors)
  .vectors       0x00000000       0x8c D:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.0.106/gcc/dev/atmega1284/avr51/crtatmega1284.o
                 0x00000000                __vector_default
@@ -469,15 +432,15 @@ END GROUP
  *(.trampolines*)
                 0x0000008c                __trampolines_end = .
  *(.progmem*)
- .progmem.data.__c.2122
+ .progmem.data.__c.2121
                 0x0000008c        0xd 003.o
- .progmem.data.__c.2120
+ .progmem.data.__c.2119
                 0x00000099        0xf 003.o
- .progmem.data.__c.2118
+ .progmem.data.__c.2117
                 0x000000a8        0xb 003.o
- .progmem.data.__c.2116
+ .progmem.data.__c.2115
                 0x000000b3       0x16 003.o
- .progmem.data.__c.2114
+ .progmem.data.__c.2113
                 0x000000c9        0xe 003.o
  .progmem.data.raster
                 0x000000d7      0x400 003.o
@@ -563,82 +526,141 @@ END GROUP
  *(.text.*)
  .text.start    0x00000b1a       0x64 003.o
                 0x00000b1a                start
+ .text.AD9850_setup
+                0x00000b7e        0xe 003.o
+                0x00000b7e                AD9850_setup
+ .text.AD9850_reset
+                0x00000b8c       0x64 003.o
+                0x00000b8c                AD9850_reset
+ .text.AD9850_Setfrequency
+                0x00000bf0       0xa4 003.o
+                0x00000bf0                AD9850_Setfrequency
+ .text.adc_init
+                0x00000c94       0x12 003.o
+                0x00000c94                adc_init
  .text.create_raster
-                0x00000b7e       0x46 003.o
-                0x00000b7e                create_raster
- .text.main     0x00000bc4       0x26 003.o
-                0x00000bc4                main
+                0x00000ca6       0x46 003.o
+                0x00000ca6                create_raster
+ .text.signal_display
+                0x00000cec        0x8 003.o
+                0x00000cec                signal_display
+ .text.main     0x00000cf4      0x142 003.o
+                0x00000cf4                main
  .text.dataflash_init
-                0x00000bea        0xa includes/dataflash.o
-                0x00000bea                dataflash_init
+                0x00000e36        0xa includes/dataflash.o
+                0x00000e36                dataflash_init
  .text.LCD_Update
-                0x00000bf4       0x9e includes/lcd.o
-                0x00000bf4                LCD_Update
+                0x00000e40       0x9e includes/lcd.o
+                0x00000e40                LCD_Update
  .text.LCD_Clear
-                0x00000c92       0x2e includes/lcd.o
-                0x00000c92                LCD_Clear
+                0x00000ede       0x2e includes/lcd.o
+                0x00000ede                LCD_Clear
  .text.LCD_PutChar
-                0x00000cc0       0x94 includes/lcd.o
-                0x00000cc0                LCD_PutChar
+                0x00000f0c       0x94 includes/lcd.o
+                0x00000f0c                LCD_PutChar
  .text.LCD_PutString_P
-                0x00000d54       0x24 includes/lcd.o
-                0x00000d54                LCD_PutString_P
+                0x00000fa0       0x24 includes/lcd.o
+                0x00000fa0                LCD_PutString_P
  .text.LCD_GotoXY
-                0x00000d78        0xa includes/lcd.o
-                0x00000d78                LCD_GotoXY
+                0x00000fc4        0xa includes/lcd.o
+                0x00000fc4                LCD_GotoXY
  .text.Backlight_Off
-                0x00000d82       0x34 includes/lcd.o
-                0x00000d82                Backlight_Off
+                0x00000fce       0x34 includes/lcd.o
+                0x00000fce                Backlight_Off
  .text.LCD_Init
-                0x00000db6       0x64 includes/lcd.o
-                0x00000db6                LCD_Init
+                0x00001002       0x64 includes/lcd.o
+                0x00001002                LCD_Init
  .text.Backlight_LED
-                0x00000e1a       0x22 includes/lcd.o
-                0x00000e1a                Backlight_LED
+                0x00001066       0x22 includes/lcd.o
+                0x00001066                Backlight_LED
  .text.SPI_MasterInit
-                0x00000e3c       0x24 includes/spi.o
-                0x00000e3c                SPI_MasterInit
+                0x00001088       0x24 includes/spi.o
+                0x00001088                SPI_MasterInit
  .text.SPI_MasterTransfer
-                0x00000e60        0xa includes/spi.o
-                0x00000e60                SPI_MasterTransfer
+                0x000010ac        0xa includes/spi.o
+                0x000010ac                SPI_MasterTransfer
  .text.TWI_Init
-                0x00000e6a       0x28 includes/twi.o
-                0x00000e6a                TWI_Init
+                0x000010b6       0x28 includes/twi.o
+                0x000010b6                TWI_Init
  .text.TWI_Start
-                0x00000e92       0x36 includes/twi.o
-                0x00000e92                TWI_Start
+                0x000010de       0x36 includes/twi.o
+                0x000010de                TWI_Start
  .text.TWI_Address_RW
-                0x00000ec8       0x3a includes/twi.o
-                0x00000ec8                TWI_Address_RW
+                0x00001114       0x3a includes/twi.o
+                0x00001114                TWI_Address_RW
  .text.TWI_Write
-                0x00000f02       0x3a includes/twi.o
-                0x00000f02                TWI_Write
+                0x0000114e       0x3a includes/twi.o
+                0x0000114e                TWI_Write
  .text.TWI_Stop
-                0x00000f3c        0xe includes/twi.o
-                0x00000f3c                TWI_Stop
+                0x00001188        0xe includes/twi.o
+                0x00001188                TWI_Stop
  .text.__vector_9
-                0x00000f4a       0x44 includes/twi.o
-                0x00000f4a                __vector_9
+                0x00001196       0x44 includes/twi.o
+                0x00001196                __vector_9
  .text.__vector_20
-                0x00000f8e       0xa2 includes/uart.o
-                0x00000f8e                __vector_20
+                0x000011da       0xa2 includes/uart.o
+                0x000011da                __vector_20
  .text.__vector_22
-                0x00001030       0x9e includes/uart.o
-                0x00001030                __vector_22
+                0x0000127c       0x9e includes/uart.o
+                0x0000127c                __vector_22
  .text.__vector_28
-                0x000010ce       0xa2 includes/uart.o
-                0x000010ce                __vector_28
+                0x0000131a       0xa2 includes/uart.o
+                0x0000131a                __vector_28
  .text.__vector_30
-                0x00001170       0x9e includes/uart.o
-                0x00001170                __vector_30
+                0x000013bc       0x9e includes/uart.o
+                0x000013bc                __vector_30
  .text.uart_init0
-                0x0000120e       0x20 includes/uart.o
-                0x0000120e                uart_init0
-                0x0000122e                . = ALIGN (0x2)
+                0x0000145a       0x20 includes/uart.o
+                0x0000145a                uart_init0
+ .text.avr-libc.fplib
+                0x0000147a        0x8 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3.o)
+                0x0000147a                __divsf3
+ .text.avr-libc.fplib
+                0x00001482       0xdc d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(divsf3x.o)
+                0x000014a2                __divsf3x
+                0x000014a8                __divsf3_pse
+ .text.avr-libc.fplib
+                0x0000155e       0x5e d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fixunssfsi.o)
+                0x0000155e                __fixunssfsi
+ .text.avr-libc.fplib
+                0x000015bc       0x7a d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(floatsisf.o)
+                0x000015bc                __floatunsisf
+                0x000015c0                __floatsisf
+ .text.avr-libc.fplib
+                0x00001636        0xc d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_inf.o)
+                0x00001636                __fp_inf
+ .text.avr-libc.fplib
+                0x00001642        0x6 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_nan.o)
+                0x00001642                __fp_nan
+ .text.avr-libc.fplib
+                0x00001648        0xe d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscA.o)
+                0x00001648                __fp_pscA
+ .text.avr-libc.fplib
+                0x00001656        0xe d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_pscB.o)
+                0x00001656                __fp_pscB
+ .text.avr-libc.fplib
+                0x00001664       0x22 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_round.o)
+                0x00001664                __fp_round
+ .text.avr-libc.fplib
+                0x00001686       0x44 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_split3.o)
+                0x00001686                __fp_split3
+                0x00001696                __fp_splitA
+ .text.avr-libc.fplib
+                0x000016ca        0xe d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(fp_zero.o)
+                0x000016ca                __fp_zero
+                0x000016cc                __fp_szero
+ .text.avr-libc.fplib
+                0x000016d8        0x8 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3.o)
+                0x000016d8                __mulsf3
+ .text.avr-libc.fplib
+                0x000016e0       0xd2 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/../../../../avr/lib/avr51\libm.a(mulsf3x.o)
+                0x000016fe                __mulsf3x
+                0x00001704                __mulsf3_pse
+                0x000017b2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000122e        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
-                0x0000122e                _exit
-                0x0000122e                exit
+ .fini9         0x000017b2        0x0 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
+                0x000017b2                _exit
+                0x000017b2                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -657,11 +679,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000122e        0x4 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
+ .fini0         0x000017b2        0x4 d:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr51\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001232                _etext = .
+                0x000017b6                _etext = .
 
-.data           0x00800100       0xa0 load address 0x00001232
+.data           0x00800100       0xa0 load address 0x000017b6
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -675,64 +697,66 @@ END GROUP
                 0x008001a0                _edata = .
                 0x008001a0                PROVIDE (__data_end, .)
 
-.bss            0x008001a0      0x4b3
+.bss            0x008001a0      0x4b7
                 0x008001a0                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
+ .bss.AD_freq   0x008001a0        0x4 003.o
+                0x008001a0                AD_freq
  .bss.lcd_texty
-                0x008001a0        0x1 includes/lcd.o
-                0x008001a0                lcd_texty
+                0x008001a4        0x1 includes/lcd.o
+                0x008001a4                lcd_texty
  .bss.lcd_textx
-                0x008001a1        0x1 includes/lcd.o
-                0x008001a1                lcd_textx
+                0x008001a5        0x1 includes/lcd.o
+                0x008001a5                lcd_textx
  .bss.lcd_frameupdate
-                0x008001a2        0x1 includes/lcd.o
-                0x008001a2                lcd_frameupdate
- .bss.SPI_flag  0x008001a3        0x2 includes/spi.o
-                0x008001a3                SPI_flag
+                0x008001a6        0x1 includes/lcd.o
+                0x008001a6                lcd_frameupdate
+ .bss.SPI_flag  0x008001a7        0x2 includes/spi.o
+                0x008001a7                SPI_flag
  .bss.twi_timeout
-                0x008001a5        0x1 includes/twi.o
-                0x008001a5                twi_timeout
+                0x008001a9        0x1 includes/twi.o
+                0x008001a9                twi_timeout
  .bss.checksum.1741
-                0x008001a6        0x1 includes/uart.o
- .bss.byte_cnt.1742
-                0x008001a7        0x1 includes/uart.o
- .bss.checksum_in.1735
-                0x008001a8        0x1 includes/uart.o
- .bss.checksum.1734
-                0x008001a9        0x1 includes/uart.o
- .bss.address.1733
                 0x008001aa        0x1 includes/uart.o
- .bss.uart_rx_cnt.1732
+ .bss.byte_cnt.1742
                 0x008001ab        0x1 includes/uart.o
- .bss.checksum.1724
+ .bss.checksum_in.1735
                 0x008001ac        0x1 includes/uart.o
- .bss.byte_cnt.1725
+ .bss.checksum.1734
                 0x008001ad        0x1 includes/uart.o
- .bss.checksum_in.1718
+ .bss.address.1733
                 0x008001ae        0x1 includes/uart.o
- .bss.checksum.1717
+ .bss.uart_rx_cnt.1732
                 0x008001af        0x1 includes/uart.o
- .bss.address.1716
+ .bss.checksum.1724
                 0x008001b0        0x1 includes/uart.o
- .bss.uart_rx_cnt.1715
+ .bss.byte_cnt.1725
                 0x008001b1        0x1 includes/uart.o
- .bss.data_ok   0x008001b2        0x1 includes/uart.o
-                0x008001b2                data_ok
+ .bss.checksum_in.1718
+                0x008001b2        0x1 includes/uart.o
+ .bss.checksum.1717
+                0x008001b3        0x1 includes/uart.o
+ .bss.address.1716
+                0x008001b4        0x1 includes/uart.o
+ .bss.uart_rx_cnt.1715
+                0x008001b5        0x1 includes/uart.o
+ .bss.data_ok   0x008001b6        0x1 includes/uart.o
+                0x008001b6                data_ok
  *(COMMON)
- COMMON         0x008001b3      0x400 includes/lcd.o
-                0x008001b3                lcd_framebuffer
- COMMON         0x008005b3       0xa0 includes/uart.o
-                0x008005b3                data_frame_in
-                0x00800653                PROVIDE (__bss_end, .)
-                0x00001232                __data_load_start = LOADADDR (.data)
-                0x000012d2                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x008001b7      0x400 includes/lcd.o
+                0x008001b7                lcd_framebuffer
+ COMMON         0x008005b7       0xa0 includes/uart.o
+                0x008005b7                data_frame_in
+                0x00800657                PROVIDE (__bss_end, .)
+                0x000017b6                __data_load_start = LOADADDR (.data)
+                0x00001856                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800653        0x0
+.noinit         0x00800657        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800653                _end = .
+                0x00800657                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -820,32 +844,32 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x2c41
+.debug_info     0x00000000     0x2d23
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0xad5 003.o
- .debug_info    0x00000ad5      0x53e includes/dataflash.o
- .debug_info    0x00001013      0xd35 includes/lcd.o
- .debug_info    0x00001d48       0xee includes/spi.o
- .debug_info    0x00001e36      0x147 includes/twi.o
- .debug_info    0x00001f7d      0xcc4 includes/uart.o
+ .debug_info    0x00000000      0xbb7 003.o
+ .debug_info    0x00000bb7      0x53e includes/dataflash.o
+ .debug_info    0x000010f5      0xd35 includes/lcd.o
+ .debug_info    0x00001e2a       0xee includes/spi.o
+ .debug_info    0x00001f18      0x147 includes/twi.o
+ .debug_info    0x0000205f      0xcc4 includes/uart.o
 
-.debug_abbrev   0x00000000      0xaec
+.debug_abbrev   0x00000000      0xac8
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x35c 003.o
- .debug_abbrev  0x0000035c       0xf4 includes/dataflash.o
- .debug_abbrev  0x00000450      0x27c includes/lcd.o
- .debug_abbrev  0x000006cc       0xb6 includes/spi.o
- .debug_abbrev  0x00000782       0xc6 includes/twi.o
- .debug_abbrev  0x00000848      0x2a4 includes/uart.o
+ .debug_abbrev  0x00000000      0x338 003.o
+ .debug_abbrev  0x00000338       0xf4 includes/dataflash.o
+ .debug_abbrev  0x0000042c      0x27c includes/lcd.o
+ .debug_abbrev  0x000006a8       0xb6 includes/spi.o
+ .debug_abbrev  0x0000075e       0xc6 includes/twi.o
+ .debug_abbrev  0x00000824      0x2a4 includes/uart.o
 
-.debug_line     0x00000000     0x1b6b
+.debug_line     0x00000000     0x1c06
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x56b 003.o
- .debug_line    0x0000056b      0x2bc includes/dataflash.o
- .debug_line    0x00000827      0x5d1 includes/lcd.o
- .debug_line    0x00000df8      0x111 includes/spi.o
- .debug_line    0x00000f09      0x20d includes/twi.o
- .debug_line    0x00001116      0xa55 includes/uart.o
+ .debug_line    0x00000000      0x606 003.o
+ .debug_line    0x00000606      0x2bc includes/dataflash.o
+ .debug_line    0x000008c2      0x5d1 includes/lcd.o
+ .debug_line    0x00000e93      0x111 includes/spi.o
+ .debug_line    0x00000fa4      0x20d includes/twi.o
+ .debug_line    0x000011b1      0xa55 includes/uart.o
 
 .debug_frame    0x00000000      0x834
  *(.debug_frame)
@@ -858,27 +882,27 @@ END GROUP
 
 .debug_str      0x00000000      0x88d
  *(.debug_str)
- .debug_str     0x00000000      0x39e 003.o
-                                0x405 (size before relaxing)
- .debug_str     0x0000039e      0x123 includes/dataflash.o
+ .debug_str     0x00000000      0x3ad 003.o
+                                0x414 (size before relaxing)
+ .debug_str     0x000003ad      0x123 includes/dataflash.o
                                 0x270 (size before relaxing)
- .debug_str     0x000004c1      0x115 includes/lcd.o
+ .debug_str     0x000004d0      0x115 includes/lcd.o
                                 0x388 (size before relaxing)
- .debug_str     0x000005d6       0x2e includes/spi.o
+ .debug_str     0x000005e5       0x2e includes/spi.o
                                 0x1a1 (size before relaxing)
- .debug_str     0x00000604       0x29 includes/twi.o
+ .debug_str     0x00000613       0x29 includes/twi.o
                                 0x1ad (size before relaxing)
- .debug_str     0x0000062d      0x260 includes/uart.o
+ .debug_str     0x0000063c      0x251 includes/uart.o
                                 0x407 (size before relaxing)
 
-.debug_loc      0x00000000     0x29db
+.debug_loc      0x00000000     0x29c3
  *(.debug_loc)
- .debug_loc     0x00000000      0x3c8 003.o
- .debug_loc     0x000003c8      0x654 includes/dataflash.o
- .debug_loc     0x00000a1c      0xc3f includes/lcd.o
- .debug_loc     0x0000165b       0x1f includes/spi.o
- .debug_loc     0x0000167a       0xb0 includes/twi.o
- .debug_loc     0x0000172a     0x12b1 includes/uart.o
+ .debug_loc     0x00000000      0x3b0 003.o
+ .debug_loc     0x000003b0      0x654 includes/dataflash.o
+ .debug_loc     0x00000a04      0xc3f includes/lcd.o
+ .debug_loc     0x00001643       0x1f includes/spi.o
+ .debug_loc     0x00001662       0xb0 includes/twi.o
+ .debug_loc     0x00001712     0x12b1 includes/uart.o
 
 .debug_macinfo
  *(.debug_macinfo)
