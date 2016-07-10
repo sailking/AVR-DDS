@@ -22,7 +22,7 @@ dss_0708.d dss_0708.o: .././dss_0708.c \
  .././includes/uart.h \
  d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\atomic.h \
  .././includes/lcd.h .././includes/twi.h .././includes/dataflash.h \
- .././includes/oszilloskope.h
+ .././includes/signal_display.h
 
 d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -74,4 +74,4 @@ d:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 .././includes/dataflash.h:
 
-.././includes/oszilloskope.h:
+.././includes/signal_display.h:

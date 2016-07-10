@@ -27,15 +27,15 @@
     <BootSegment>2</BootSegment>
     <AsfFrameworkConfig>
       <framework-data>
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.22.0" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.22.0" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
     <preserveEEPROM>true</preserveEEPROM>
   </PropertyGroup>
@@ -144,7 +144,7 @@
     <Compile Include="includes\lcd.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="includes\oszilloskope.h">
+    <Compile Include="includes\signal_display.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="includes\spi.c">
