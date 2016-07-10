@@ -51,12 +51,16 @@ void AD9850_setup();
 void AD9850_reset();
 void get_frequence();
 void AD9850_Setfrequency(double freq);
-void(*get_frequence_p)(void) = get_frequence;	
-		//define a function pointer, point to function get_frequence
-void test()
+//void(*get_frequence_p)(void) = get_frequence;				//define a function pointer, point to function get_frequence
+void test(uint8_t a)
 {
+	char buffer[32];
 	LCD_Clear();
-	Backlight_Off();
+	LCD_GotoXY(0,0);
+	itoa(a,buffer, 10);
+	LCD_PutString(buffer);
+	LCD_Update();
+	wait_joy_button();
 }
 
 const uint8_t PROGMEM raster[1024] =
@@ -146,13 +150,7 @@ int main(void)
 	start ();
 	
 	get_frequence();
-	_delay_ms(200);
 	
-	for(;;)
-	{
-		AD9850_Setfrequency(AD_freq);
-		signal_display();
-	}	
 }
 
 void start ()
@@ -213,26 +211,22 @@ void AD9850_reset()
 
 void get_frequence()
 {
-    _delay_ms(200);
+	_delay_ms(200);
 	LCD_Clear();
 	LCD_GotoXY(0,2);
 	LCD_PutString_P(PSTR("    waiting for "));
 	LCD_GotoXY(0,4);
 	LCD_PutString_P(PSTR("   the frequence..."));
 	LCD_GotoXY(20,7);
-    LCD_PutChar(0x10);
+	LCD_PutChar(0x10);
 	LCD_Update();
-
+	
     sei();
     while(1)
     {
-		_delay_ms(200);
-		if (~PINA&(1<<PINA3))
-			break;
+		_delay_ms(200);	
         if(data_ok == 1)
-        {
-			
-			
+        {	
 			data1 = (uint16_t)(data_frame_in[0] << 8);
 			data1 += (uint16_t)(data_frame_in[1]);
 			data2 = (uint16_t)(data_frame_in[2] << 8);
@@ -242,12 +236,13 @@ void get_frequence()
 			AD_freq <<= 16;
 			AD_freq += data2;
 			
-			
 			uart1_tx_frame(3);
 			data_ok = 0;
-			break;
-        }
-    }
+			
+			AD9850_Setfrequency(AD_freq);
+			signal_display();	
+		}
+    }	
 }
 
 void AD9850_Setfrequency(double freq)
@@ -411,8 +406,18 @@ void signal_display()
 		if((~PINA&(1<<PINA6)) && (Ypos2 >= -60))
 			Ypos2++;
 			
-		if (~PINA&(1<<PINA3))
-			break;		//when Joystick Button is pressed, get the frequence from serial port again;
+		if (~PINA&(1<<PINA3))			//when Joystick Button is pressed, freeze the display. Press Joystick button again get the frequence from serial port again;
+		{
+			_delay_ms(200);
+			while(1)
+			{
+				if(~PINA&(1<<PINA3))
+				break;
+			}
+			break;
+		}
+					  
+		
 
 		findZero = 0;
 		upLimit = 0;
@@ -452,7 +457,7 @@ void signal_display()
 
 			if (lowLimit > ADCvalue) // Find the lower voltage level of the input waveform.
 				lowLimit = ADCvalue;
-
+/*
 			if (ADCvalue > 0)
 			{
 				//voltage = ((upLimit-lowLimit)*2); //Get the Vpp and store it to "voltage" (Volts Peak-to-peak of inputed waveform).
@@ -462,7 +467,11 @@ void signal_display()
 			}
 			else
 				ADCvalue = 2;
-		
+*/
+			ADCvalue += 3;
+			ADCvalue /= 3;
+			ADCvalue += 2;
+			
 			position = ADCvalue + Ypos2 ; 
 			if ((position <= 63) && (position >= 0) && (i<100) && (freqComplete >= 1))
 				fillDataLcdBuffer(i,position);
@@ -515,7 +524,7 @@ void signal_display()
 			dataCounter++;
 		}while(complete == FALSE);
 	}
-	(*get_frequence_p)();
+	//(*get_frequence_p)();
 }
 
 
