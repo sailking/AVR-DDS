@@ -25,7 +25,7 @@ uint16_t ADCvalue;
 uint8_t hex2asciiBuffer[4];
 
 int8_t Ypos   = 0; 
-int8_t Ypos2   = 0;
+int8_t Ypos2   = 20;
 int8_t position  = 0;
 
 static uint8_t dataLcdBuffer[100];

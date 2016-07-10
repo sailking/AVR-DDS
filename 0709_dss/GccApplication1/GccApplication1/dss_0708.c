@@ -35,7 +35,7 @@
 
 signed int freq = 0;
 
-uint32_t AD_freq = 0;
+uint32_t AD_freq = 1000;
 uint16_t data1 = 0;
 uint16_t data2 = 0;
 
@@ -147,7 +147,7 @@ int main(void)
 	
 	get_frequence();
 	_delay_ms(200);
-	AD_freq = 100000;
+	
 	for(;;)
 	{
 		AD9850_Setfrequency(AD_freq);
@@ -171,7 +171,7 @@ void start ()
 void adc_init ()
 {
 	ADMUX = 0b01100001;    // PA1 -> ADC1, ADLAR=1 (8-bit)
-	ADCSRA |= ((1<<ADEN) | (1<<ADSC) | (1<<ADPS1)); // ADC prescaler at 4
+	ADCSRA |= ((1<<ADEN) | (1<<ADSC) | (1<<ADPS1)|(0<<ADPS2)); // ADC prescaler at 4
 }
 
 void AD9850_setup()
@@ -352,7 +352,6 @@ void create_raster()
 	uint16_t raster_offset = 0;
 	uint8_t fb_x = 0;
 	uint8_t fb_y = 0;
-	Backlight_LED(BL_RED_ON | BL_GREEN_ON | BL_BLUE_ON);
 	LCD_Clear();
 	for (fb_y = 0; fb_y < 8; fb_y++)
 		for (fb_x = 0; fb_x < 128; fb_x++)
@@ -366,7 +365,7 @@ void frequence_display()
 	char getfrequency_buffer[32];
 	LCD_GotoXY(17,5);
 	// display the labels on LCD
-	itoa(((uint32_t)AD_freq/1000), getfrequency_buffer, 10);
+	itoa(((uint32_t)AD_freq), getfrequency_buffer, 10);
 	//sprintf(getfrequency_buffer,"%0i; %0i; %0i; %0i",data_frame_in[0],data_frame_in[1],data_frame_in[2],data_frame_in[3]);
 	LCD_PutString(getfrequency_buffer);
 	LCD_GotoXY(20,7);
@@ -378,6 +377,7 @@ void frequence_display()
 void create_wave()
 {
 	LCD_Clear();
+	Backlight_LED(BL_GREEN_ON);
 	create_raster();
 	frequence_display();
 	uint8_t i;
@@ -399,17 +399,17 @@ void signal_display()
 
 	for(;;)
 	{
-		if((~PINA&(1<<PINA7))&& (timeDiv <= 120))
+		if((~PINA&(1<<PINA5))&& (timeDiv <= 120))
 			timeDiv += 1;
 			
-		if((~PINA&(1<<PINA6)) && (timeDiv >= 1))
+		if((~PINA&(1<<PINA4)) && (timeDiv >= 1))
 			timeDiv -= 1;
 			
-		if((~PINA&(1<<PINA5)) && (Ypos2 <= 60))
-			Ypos2++;
-
-		if((~PINA&(1<<PINA4)) && (Ypos2 >= -60))
+		if((~PINA&(1<<PINA7)) && (Ypos2 <= 60))
 			Ypos2--;
+			
+		if((~PINA&(1<<PINA6)) && (Ypos2 >= -60))
+			Ypos2++;
 			
 		if (~PINA&(1<<PINA3))
 			break;		//when Joystick Button is pressed, get the frequence from serial port again;
@@ -452,19 +452,19 @@ void signal_display()
 
 			if (lowLimit > ADCvalue) // Find the lower voltage level of the input waveform.
 				lowLimit = ADCvalue;
-		
+
 			if (ADCvalue > 0)
 			{
-				voltage = ((upLimit-lowLimit)*2); //Get the Vpp and store it to "voltage" (Volts Peak-to-peak of inputed waveform).
-				ADCvalue += 5;
-				ADCvalue /= 5;
+				//voltage = ((upLimit-lowLimit)*2); //Get the Vpp and store it to "voltage" (Volts Peak-to-peak of inputed waveform).
+				ADCvalue += 3;
+				ADCvalue /= 3;
 				ADCvalue += 2;
 			}
 			else
 				ADCvalue = 2;
 		
-			position = ADCvalue + Ypos2 +5; 
-			if ((position <= 63) && (position >= 0) && (i<100))
+			position = ADCvalue + Ypos2 ; 
+			if ((position <= 63) && (position >= 0) && (i<100) && (freqComplete >= 1))
 				fillDataLcdBuffer(i,position);
 			else
 			{
@@ -476,14 +476,14 @@ void signal_display()
 			}
 		}
 		if(upLimit != lowLimit)
-			trigger = (((upLimit - lowLimit)/2)+ lowLimit);
+			trigger = ((upLimit + lowLimit)/2);
 		else
 			trigger = upLimit;
 
 //--------------------display the signal----------------------------
 		create_wave();
 //-------------------------------------------------------------------
-/*
+
 		dataCounter = 0;
 		complete = FALSE;
 		freqComplete = 0;
@@ -514,9 +514,7 @@ void signal_display()
 				complete = TRUE;
 			dataCounter++;
 		}while(complete == FALSE);
-*/
 	}
-
 	(*get_frequence_p)();
 }
 
