@@ -23,7 +23,7 @@
 #include "includes/lcd.h"
 #include "includes/twi.h"
 #include "includes/dataflash.h"
-#include "includes/oszilloskope.h"
+#include "includes/signal_display.h"
 
 //????AD9850???
 #define DATA PINB1
@@ -51,7 +51,13 @@ void AD9850_setup();
 void AD9850_reset();
 void get_frequence();
 void AD9850_Setfrequency(double freq);
-void(*get_frequence_p)(void) = get_frequence;			//define a function pointer, point to function get_frequence
+void(*get_frequence_p)(void) = get_frequence;	
+		//define a function pointer, point to function get_frequence
+void test()
+{
+	LCD_Clear();
+	Backlight_Off();
+}
 
 const uint8_t PROGMEM raster[1024] =
 {
@@ -140,32 +146,13 @@ int main(void)
 	start ();
 	
 	get_frequence();
-
-	do
+	_delay_ms(200);
+	AD_freq = 100000;
+	for(;;)
 	{
-		if(~PINA&(1<<PINA7))
-			AD_freq +=1000000;
-			_delay_ms(100);
-
-		if (~PINA&(1<<PINA6))
-			AD_freq -=1000000;
-			_delay_ms(100);
-
-		if (~PINA&(1<<PINA5))
-			AD_freq -=100000;
-			_delay_ms(100);
-
-		if (~PINA&(1<<PINA4))
-			AD_freq +=100000;
-			_delay_ms(100);
-		
 		AD9850_Setfrequency(AD_freq);
-		create_raster();
-		frequence_display();	
-		
-	}while (!(~PINA&(1<<PINA3)));
-	
 		signal_display();
+	}	
 }
 
 void start ()
@@ -242,7 +229,6 @@ void get_frequence()
 		_delay_ms(200);
 		if (~PINA&(1<<PINA3))
 			break;
-		//uart0_tx_frame();
         if(data_ok == 1)
         {
 			
@@ -391,6 +377,9 @@ void frequence_display()
 
 void create_wave()
 {
+	LCD_Clear();
+	create_raster();
+	frequence_display();
 	uint8_t i;
 	for(i=0;i<100;i++)
 	{
@@ -405,8 +394,7 @@ void signal_display()
 	uint16_t i,k;
 	//uint32_t endOfPeriod=0;
 	uint8_t freqComplete=0;
-
-	//LCD_Clear();
+	_delay_ms(200);
 	create_wave();
 
 	for(;;)
@@ -424,7 +412,7 @@ void signal_display()
 			Ypos2--;
 			
 		if (~PINA&(1<<PINA3))
-			(*get_frequence_p)();		//when Joystick Button is pressed, get the frequence from serial port again;
+			break;		//when Joystick Button is pressed, get the frequence from serial port again;
 
 		findZero = 0;
 		upLimit = 0;
@@ -447,9 +435,8 @@ void signal_display()
 				freqComplete = 2;
 
 			if((ADCvalue > trigger) && (prevADCvalue < ADCvalue) && (freqComplete == 2))
-			{
 				freqComplete = 3; //we found the end of the first period.
-			}
+			
 
 			prevADCvalue = ADCvalue; // Get a backup of the current ADC value.
 
@@ -496,7 +483,7 @@ void signal_display()
 //--------------------display the signal----------------------------
 		create_wave();
 //-------------------------------------------------------------------
-
+/*
 		dataCounter = 0;
 		complete = FALSE;
 		freqComplete = 0;
@@ -527,7 +514,10 @@ void signal_display()
 				complete = TRUE;
 			dataCounter++;
 		}while(complete == FALSE);
+*/
 	}
+
+	(*get_frequence_p)();
 }
 
 
